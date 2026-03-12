@@ -96,9 +96,11 @@ module.exports = async options =>
           reload: false,
         },
       ),
+      /*
       new WebpackNotifierPlugin({
         title: 'Aerolinea Virtual',
         contentImage: path.join(__dirname, 'logo-jhipster.png'),
       }),
+      */
     ].filter(Boolean),
   });

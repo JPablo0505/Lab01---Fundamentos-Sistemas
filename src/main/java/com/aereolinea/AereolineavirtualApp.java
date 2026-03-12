@@ -85,7 +85,7 @@ public class AereolineavirtualApp {
             LOG.warn("The host name could not be determined, using `localhost` as fallback");
         }
         LOG.info(
-            CRLFLogConverter.CRLF_SAFE_MARKER,
+            // CRLFLogConverter.CRLF_SAFE_MARKER,
             """
 
             ----------------------------------------------------------

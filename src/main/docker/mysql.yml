@@ -1,20 +1,22 @@
-# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
-name: aerolineavirtual
 services:
   mysql:
-    image: mysql:9.1.0
-    volumes:
-      - ./config/mysql:/etc/mysql/conf.d
+    image: mysql:8.0.33
+    restart: unless-stopped
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ALLOW_EMPTY_PASSWORD=no
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=aerolineavirtual
-    # If you want to expose these ports outside your dev PC,
-    # remove the "127.0.0.1:" prefix
+      - MYSQL_USER=aero
+      - MYSQL_PASSWORD=aero
+      - MYSQL_ROOT_HOST=%
     ports:
-      - 127.0.0.1:3306:3306
-    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+      - '3307:3306'
     healthcheck:
-      test: ['CMD', 'mysql', '-e', 'SHOW DATABASES;']
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-uroot', '-proot']
       interval: 5s
       timeout: 5s
-      retries: 10
+      retries: 30
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
